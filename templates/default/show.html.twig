@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pokemon{% endblock %}
+{% block stylesheets %}{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 1000px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    #moves_wrapper { display: none; }
+</style>
+
+<div class="example-wrapper">
+    <p>Id: {{ pokemon.id }}</p>
+    <p>Name: {{ pokemon.name }}</p>
+    <p><img src="
+        {% if attribute(pokemon.sprites.other, 'official-artwork').front_default %}
+            {{ attribute(pokemon.sprites.other, 'official-artwork').front_default }}
+        {% else %}
+            {{ pokemon.sprites.front_default }}
+        {% endif %}
+        " alt="no picture available"></p>
+    <p>Type(s): </p>
+    <ul>
+        {% for type in pokemon.types %}
+            <li>{{ type.type.name|e }}</li>
+        {% endfor %}
+    </ul>
+    <p>Strongest Pokemon(s) for type(s): </p>
+    <ul>
+        {% for bestPokemon in pokemonsWithBiggestStats %}
+            <li>{{ bestPokemon.type|e }}: <a href="{{ path('pokemon', {id: bestPokemon.id}) }}">{{ bestPokemon.name }}</a>, stats (base attack + base defense): {{ bestPokemon.stats }}</li>
+        {% endfor %}
+    </ul>
+    <p>Height: {{ pokemon.height }}</p>
+    <p>Weight: {{ pokemon.weight }}</p>
+    <p>Base Experience: {{ pokemon.base_experience }}</p>
+    <p>Base Stats: </p>
+    <ul>
+        {% for stat in pokemon.stats %}
+            <li>{{ stat.stat.name }}: {{ stat.base_stat|e }}</li>
+        {% endfor %}
+    </ul>
+    <p>Abilities: </p>
+    <ul>
+        {% for ability in pokemon.abilities %}
+            <li>{{ ability.ability.name|e }}</li>
+        {% endfor %}
+    </ul>
+    <button>Show all Moves: </button>
+    <div id="moves_wrapper">
+        <ol>
+            {% for move in pokemon.moves %}
+                <li>{{ move.move.name|e }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(document).ready(function() {
+        console.log("ready!");
+
+        $("button").click(function(){
+            $("#moves_wrapper").toggle();
+        });
+    });
+</script>
+{% endblock %}
