@@ -11,8 +11,10 @@
 </style>
 
 <div class="example-wrapper">
-    <p>Id: {{ pokemon.id }}</p>
-    <p>Name: {{ pokemon.name }}</p>
+    <a class="btn btn-primary" href="{{ path('home') }}" role="button">Home</a>
+
+    <p class="font-weight-bold">Id: {{ pokemon.id }}</p>
+    <p class="font-weight-bold">Name: {{ pokemon.name }}</p>
     <p><img src="
         {% if attribute(pokemon.sprites.other, 'official-artwork').front_default %}
             {{ attribute(pokemon.sprites.other, 'official-artwork').front_default }}
@@ -61,8 +63,6 @@
 {% block javascripts %}
 <script>
     $(document).ready(function() {
-        console.log("ready!");
-
         $("button").click(function(){
             $("#moves_wrapper").toggle();
         });

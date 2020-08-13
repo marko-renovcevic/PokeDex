@@ -9,7 +9,7 @@ use App\External\PokeService;
 class DefaultController extends AbstractController
 {
     /**
-     * @Route("/", name="home")
+     * @Route("/", name="home", methods={"GET"})
      */
     public function index(PokeService $pokeService)
     {
@@ -43,7 +43,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="pokemon", requirements={"page"="\d+"})
+     * @Route("/{id}", name="pokemon", methods={"GET"}, requirements={"id"="\d+"})
      */
     public function show(int $id, PokeService $pokeService)
     {
